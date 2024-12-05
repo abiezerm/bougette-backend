@@ -2,12 +2,14 @@ package main
 
 import (
 	"bouguette/cmd/api/handlers"
+	middlewares "bouguette/cmd/api/middleware"
 	"bouguette/common"
 	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type Application struct {
@@ -37,11 +39,11 @@ func main() {
 		handler: h,
 	}
 
+	e.Use(middlewares.CustomMiddleware)
+	e.Use(middleware.Logger())
 	app.routes(h)
-	fmt.Println(app)
 
 	port := os.Getenv("APP_PORT")
 	appAddress := fmt.Sprintf("localhost:%s", port)
 	e.Logger.Fatal(e.Start(appAddress))
-
 }
