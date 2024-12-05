@@ -1,0 +1,12 @@
+#IDE files
+.idea
+.vscode
+
+# Environment files
+.env
+
+# databases
+*.db
+
+# Compiled files
+tmp/
