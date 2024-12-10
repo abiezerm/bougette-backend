@@ -11,11 +11,10 @@ import (
 func NewSqliteConnection() (*gorm.DB, error) {
 	err := godotenv.Load()
 	if err != nil {
-		panic("Error loading .env file")
+		return nil, err
 	}
 
 	// for mysql you should read from .env file
-
 	db, err := gorm.Open(sqlite.Open("bougette.db"), &gorm.Config{})
 	if err != nil {
 		return nil, err

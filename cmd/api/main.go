@@ -2,7 +2,7 @@ package main
 
 import (
 	"bouguette/cmd/api/handlers"
-	middlewares "bouguette/cmd/api/middleware"
+	"bouguette/cmd/api/middlewares"
 	"bouguette/common"
 	"fmt"
 	"os"
