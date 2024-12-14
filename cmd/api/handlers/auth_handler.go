@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"bouguette/cmd/api/requests"
-	"net/http"
+	"bouguette/common"
 
 	"github.com/labstack/echo/v4"
 )
@@ -12,14 +12,15 @@ func (h *Handler) RegisterHandler(c echo.Context) error {
 	payload := new(requests.RegisterUserRequest)
 	if err := (&echo.DefaultBinder{}).BindBody(c, payload); err != nil {
 		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, "Bad request")
+		return common.SendBadRequestResponse(c, err.Error())
 	}
 
 	// validate request
 	validationErrors := h.ValidateBodyRequest(c, *payload)
-	if len(validationErrors) > 0 {
-		return c.JSON(http.StatusBadRequest, validationErrors)
+
+	if validationErrors != nil && len(validationErrors) > 0 {
+		return common.SendFailedValidationResponse(c, validationErrors)
 	}
 
-	return c.JSON(http.StatusBadRequest, validationErrors)
+	return common.SendSuccessResponse(c, "User registered successfully", nil)
 }

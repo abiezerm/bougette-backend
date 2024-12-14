@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"bouguette/common"
 	"reflect"
 	"strings"
 
@@ -8,14 +9,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type ValidationError struct {
-	Error     string `json:"error"`
-	Key       string `json:"key"`
-	Condition string `json:"condition"`
-}
-
-func (h *Handler) ValidateBodyRequest(c echo.Context, payload interface{}) []*ValidationError {
-	var errors []*ValidationError
+func (h *Handler) ValidateBodyRequest(c echo.Context, payload interface{}) []*common.ValidationError {
+	var errors []*common.ValidationError
 	var validate *validator.Validate
 	validate = validator.New(validator.WithRequiredStructEnabled())
 
@@ -45,7 +40,7 @@ func (h *Handler) ValidateBodyRequest(c echo.Context, payload interface{}) []*Va
 			// fmt.Println(key)
 			// fmt.Println("----------------")
 
-			currentValidationError := &ValidationError{
+			currentValidationError := &common.ValidationError{
 				Error:     errMessage,
 				Key:       key,
 				Condition: condition,
