@@ -31,7 +31,10 @@ func main() {
 		e.Logger.Fatal(err)
 	}
 
-	h := handlers.Handler{DB: db}
+	h := handlers.Handler{
+		DB:     db,
+		Logger: e.Logger,
+	}
 
 	app := Application{
 		logger:  e.Logger,

@@ -2,7 +2,7 @@ module bouguette
 
 go 1.23.4
 
-require golang.org/x/sys v0.19.0 // indirect6
+require golang.org/x/sys v0.30.0 // indirect6
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
@@ -20,9 +20,9 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.24 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
-	golang.org/x/crypto v0.22.0 // indirect
+	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	gorm.io/driver/sqlite v1.5.6 // indirect
 	gorm.io/gorm v1.25.12 // indirect

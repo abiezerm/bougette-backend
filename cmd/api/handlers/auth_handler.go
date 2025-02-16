@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"bouguette/cmd/api/requests"
+	"bouguette/cmd/api/services"
 	"bouguette/common"
+	"errors"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 func (h *Handler) RegisterHandler(c echo.Context) error {
@@ -18,9 +21,24 @@ func (h *Handler) RegisterHandler(c echo.Context) error {
 	// validate request
 	validationErrors := h.ValidateBodyRequest(c, *payload)
 
-	if validationErrors != nil && len(validationErrors) > 0 {
+	if len(validationErrors) > 0 {
 		return common.SendFailedValidationResponse(c, validationErrors)
 	}
 
-	return common.SendSuccessResponse(c, "User registered successfully", nil)
+	//check if email exists
+	userService := services.NewUserService(h.DB)
+	_, error := userService.GetUserByEmail(payload.Email)
+	if !errors.Is(error, gorm.ErrRecordNotFound) {
+		return common.SendBadRequestResponse(c, "Email has already been taken")
+	}
+	//print(userExist)
+
+	// create use in the database
+	registeredUser, err := userService.RegisterUser(payload)
+	if err != nil {
+		return err
+	}
+
+	//send response
+	return common.SendSuccessResponse(c, "User registered successfully", registeredUser)
 }
